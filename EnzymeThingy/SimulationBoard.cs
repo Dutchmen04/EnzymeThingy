@@ -11,29 +11,32 @@ public class SimulationBoard
     
     public float transferChance { get; set; }
 
-    private SimulationBoard((float, float)[][] board, Bacteria specimen)
+    public SimulationBoard((float, float)[][] board, Bacteria specimen, float transferAmount, float transferChance)
     {
         this.board = board;
         this.specimen = specimen;
+        this.transferAmount = transferAmount;
+        this.transferChance = transferChance;
     }
 
 
-    public void InitBoard(float concentration)
+    public void InitBoard(float bacteriaConcentration, float placticConcentration)
     {
         Random r = new Random();
+        previousBoard = new (float, float)[board.Length][];
         for( int i = 0; i < this.board.Length; i++)
         {
+            previousBoard[i] = new (float, float)[board.Length];
             for (int j = 0; j < this.board[i].Length; j++)
             {
-                board[i][j] = (100*r.NextSingle(), 0);
-                previousBoard[i][j] = (100*r.NextSingle(), 0);
+                board[i][j] = (placticConcentration* (1 + r.NextSingle()), 0);
+                previousBoard[i][j] = (placticConcentration * (1 + r.NextSingle()), 0);
             }
         }
 
         int halfx = board.Length / 2;
         int halfy = board[halfx].Length / 2;
-        board[halfy][halfx].Item2 = concentration;
-        board[halfy][halfx].Item2 = concentration;
+        board[halfy][halfx].Item2 = bacteriaConcentration;
     }
 
     public void Run(int iterations)
@@ -44,9 +47,9 @@ public class SimulationBoard
             for (int j = 0; j < this.board[i].Length; j++)
             {
                 (float, float) temp = board[i][j];
-                board[i][j] = (previousBoard[i][j].Item1 - specimen.d_p * previousBoard[i][j].Item2, previousBoard[i][j].Item2 * specimen.d_r);
+                board[i][j] = (temp.Item1 - specimen.plasticDigestionRate * temp.Item2, temp.Item2 * specimen.lifeRate);
                 previousBoard[i][j] = temp;
-                if(IsZeroAndAdjacentToBacteria(i,j) && r.NextSingle() < transferChance) board[i][j].Item2 += transferAmount;
+                if(IsZeroAndAdjacentToBacteria(i,j) && r.NextSingle() < transferChance) board[i][j] = (temp.Item1, transferAmount);
             }
         }
     }
@@ -60,8 +63,8 @@ public class SimulationBoard
             {
                 int currentX = x + i;
                 int currentY = y + j;
-                if(currentX < board.Length || currentX > board.Length || currentY < board[currentX].Length || currentY > board[currentX].Length){continue;}
-                if(board[currentX][currentY].Item2 == 0){continue;}
+                if(currentX < 0 || currentX >= previousBoard.Length || currentY < 0 || currentY >= previousBoard[currentX].Length){continue;}
+                if(previousBoard[currentX][currentY].Item2 == 0){continue;}
 
                 return true;
             }   
