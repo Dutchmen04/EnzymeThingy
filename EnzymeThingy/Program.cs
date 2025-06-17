@@ -13,7 +13,7 @@ class Program
                 Console.Write("Enter the plastic digestion rate: ");
                 plasticDigestionRate = float.Parse(Console.ReadLine());
                 allInputCorrect = true;
-            }catch(Exception e){ Console.WriteLine("Fill in a float dumbass");}
+            }catch(Exception e){ Console.WriteLine("Fill in a float");}
         }
         allInputCorrect = false;
         float lifeRatio = 0.0f;
@@ -24,7 +24,7 @@ class Program
                 Console.Write("Enter the life conversion rate: ");
                 lifeRatio = float.Parse(Console.ReadLine());
                 allInputCorrect = true;
-            }catch(Exception e){ Console.WriteLine("Fill in a float dumbass");}
+            }catch(Exception e){ Console.WriteLine("Fill in a float");}
         }
         allInputCorrect = false;
         float transferChance = 0.0f;
@@ -35,7 +35,7 @@ class Program
                 Console.Write("Enter the transfer chance: ");
                 transferChance = float.Parse(Console.ReadLine());
                 allInputCorrect = true;
-            }catch(Exception e){ Console.WriteLine("Fill in a float dumbass");}
+            }catch(Exception e){ Console.WriteLine("Fill in a float");}
         }
         allInputCorrect = false;
         float transferAmount = 0.0f;
@@ -46,7 +46,7 @@ class Program
                 Console.Write("Enter the transfer amount: ");
                 transferAmount = float.Parse(Console.ReadLine());
                 allInputCorrect = true;
-            }catch(Exception e){ Console.WriteLine("Fill in a float dumbass");}
+            }catch(Exception e){ Console.WriteLine("Fill in a float");}
         }
         
         allInputCorrect = false;
@@ -58,7 +58,7 @@ class Program
                 Console.Write("Enter the amount of iterations: ");
                 iterationCount = Int32.Parse(Console.ReadLine());
                 allInputCorrect = true;
-            }catch(Exception e){ Console.WriteLine("Fill in an integer dumbass");}
+            }catch(Exception e){ Console.WriteLine("Fill in an integer");}
         }
         
         Bacteria bak = new Bacteria(plasticDigestionRate, lifeRatio);
